@@ -4,6 +4,7 @@ This repository contains  my solutions to C programming exercises from the **Exe
 
 ### 🎯 Project Goals:
 * **C Language Refresher**
+* **Learning to optimalize code**
 * **Learning Git** 
 * **Practicing Vim** in VS Code and later in pure terminal
 
