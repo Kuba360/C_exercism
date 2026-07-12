@@ -23,8 +23,6 @@ list_t *append_list(list_t *list1, list_t *list2){
     for(size_t i=0;i<list2->length;i++){
         l->elements[list1->length+i]=list2->elements[i];
     }
-    free(list1);
-    free(list2);
     return l;
 }
 
@@ -50,6 +48,42 @@ size_t length_list(list_t *list){
     return list->length;
 }
 
+
+list_t *map_list(list_t *list, list_element_t (*map)(list_element_t)){
+    list_t *l=malloc(sizeof(list_t)+list->length*sizeof(list_element_t));
+    if (l==NULL)return NULL;
+    l->length=list->length;
+    for(size_t i=0;i<list->length;i++){
+        l->elements[i]=map(list->elements[i]);
+    }
+    return l;
+}
+
+
+list_element_t foldl_list(list_t *list, list_element_t initial,
+                          list_element_t (*foldl)(list_element_t,
+                                                  list_element_t))
+    {
+        list_element_t x=initial;
+        for (size_t i=0;i<list->length;i++){
+            x=foldl(x,list->elements[i]);
+        }
+        return x;
+    }
+
+list_element_t foldr_list(list_t *list, list_element_t initial,
+                          list_element_t (*foldr)(list_element_t,
+                                                  list_element_t))
+    {
+        list_element_t x=initial;
+        for (long i=(long)list->length-1;i>=0;i--){
+            x=foldr(list->elements[i],x);
+        }
+        return x;
+    }
+
+
+
 list_t *reverse_list(list_t *list){
     list_t *l=malloc(sizeof(list_t)+list->length*sizeof(list_element_t));
     if (l==NULL)return NULL;
@@ -57,7 +91,6 @@ list_t *reverse_list(list_t *list){
     for (size_t i=0;i<list->length;i++){
         l->elements[i]=list->elements[list->length-i-1];
     }
-    free(list);
     return l;
 }
 
