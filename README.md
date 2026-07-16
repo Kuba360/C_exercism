@@ -6,7 +6,7 @@ This repository contains  my solutions to C programming exercises from the **Exe
 * **C Language Refresher**
 * **Learning to optimalize code**
 * **Learning Git** 
-* **Practicing Vim** in VS Code and later in pure terminal
+* **Practicing Vim** in VS Code
 
 ---
 *This repository is continuously updated as I progress through the lessons.*
