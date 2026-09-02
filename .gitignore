@@ -2,3 +2,5 @@
 *.out
 .exercism/
 test-framework/
+**/makefile
+**/HELP.md
