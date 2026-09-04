@@ -45,3 +45,84 @@ triplets_t * triplets_with_sum(int sum){
 void free_triplets(triplets_t * t){
     free(t);
 }
+
+//AI version - main difference is in the type of variables
+/*
+#include "pythagorean_triplet.h"
+ 
+#include <stdlib.h>
+ 
+For a + b + c = sum and a^2 + b^2 = c^2, substituting
+ * c = sum - a - b and solving for b gives a closed form:
+ *
+ *   b = sum * (sum - 2a) / (2 * (sum - a))
+ *
+ * so for every candidate 'a' in [1, sum/3) we can test in O(1)
+ * whether a valid integer b > a exists, giving O(sum) total
+ * instead of an O(sum^3) triple loop or O(sum^2) double loop.
+ *
+ * Returns true and fills *out_b, *out_c if 'a' yields a valid
+ * triplet with a < b < c.
+  
+static int try_triplet(long s, long a, long *out_b, long *out_c)
+{
+    long denom = 2 * (s - a);
+    if (denom == 0)
+        return 0;
+ 
+    long numer = s * (s - 2 * a);
+    if (numer % denom != 0)
+        return 0;
+ 
+    long b = numer / denom;
+    if (b <= a)
+        return 0;
+ 
+    long c = s - a - b;
+    if (b >= c)
+        return 0;
+ 
+    *out_b = b;
+    *out_c = c;
+    return 1;
+}
+ 
+triplets_t *triplets_with_sum(int sum)
+{
+    long s = sum;
+ 
+     First pass: count matches so we can allocate the flexible
+     * array member with the exact required size. 
+    int count = 0;
+    for (long a = 1; 3 * a < s; ++a) {
+        long b, c;
+        if (try_triplet(s, a, &b, &c))
+            count++;
+    }
+ 
+    triplets_t *result = malloc(sizeof(triplets_t) +
+                                 (size_t)count * sizeof(triplet_t));
+    if (!result)
+        return NULL;
+ 
+     Second pass: fill the now correctly-sized array.
+    result->count = 0;
+    for (long a = 1; 3 * a < s; ++a) {
+        long b, c;
+        if (!try_triplet(s, a, &b, &c))
+            continue;
+ 
+        result->triplets[result->count].a = (int)a;
+        result->triplets[result->count].b = (int)b;
+        result->triplets[result->count].c = (int)c;
+        result->count++;
+    }
+ 
+    return result;
+}
+ 
+void free_triplets(triplets_t *t)
+{
+    free(t);
+}
+*/
