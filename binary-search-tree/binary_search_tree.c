@@ -35,4 +35,30 @@ void free_tree(node_t *tree){
     free_tree(tree->right);
     free(tree);
 }
-int *sorted_data(node_t *tree);
+int *sorted_data(node_t *tree){
+    if(!tree)return NULL;
+    size_t n=count_nodes(tree);
+
+    int *tab=calloc(n,sizeof(int));
+    if(!tab)return NULL;
+
+    int index=0;
+
+    sort(tab,&index,tree,tree->data);
+
+    return tab;
+}
+
+void sort(int* tab,int *index,node_t *node,int rootval){
+    if(!node)return;
+
+
+    sort(tab,index,node->left,rootval);
+    tab[(*index)++]=node->data;
+    sort(tab,index,node->right,rootval);
+}
+
+size_t count_nodes(node_t *tree){
+    if(!tree)return 0;
+    return 1+count_nodes(tree->left)+count_nodes(tree->right);
+}
